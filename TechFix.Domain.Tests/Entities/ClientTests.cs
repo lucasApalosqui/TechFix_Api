@@ -62,5 +62,12 @@ namespace TechFix.Domain.Tests.Entities
             client.UpdateUrlImage("https://image.com.br");
             Assert.IsNotNull(client.UrlImage);
         }
+
+        [TestMethod]
+        public void Ao_criar_um_cliente_o_mesmo_deve_gerar_um_slug()
+        {
+            ClientEntity client = new ClientEntity("ulias", "de lima", "luisemail.com", "12345678");
+            Assert.IsNotNull(client.Slug);
+        }
     }
 }
