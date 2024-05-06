@@ -26,6 +26,7 @@ namespace TechFix.Domain.Entities
             if (emailVerify.Invalid)
                 AddNotification(emailAddress, emailVerify.Notifications.ToString());
 
+            Slug = GenSlug(name, lastName);
             Name = name;
             LastName = lastName;
             Email = emailVerify;
@@ -50,6 +51,15 @@ namespace TechFix.Domain.Entities
         public void UpdateUrlImage(string urlImage)
         {
             UrlImage = urlImage;
+        }
+
+        public string GenSlug(string name, string lastName)
+        {
+            name.ToLower();
+            lastName.ToLower();
+            name.Trim();
+            lastName.Trim();
+            return name + "-" + lastName.Replace(" ", "-");
         }
 
     }
