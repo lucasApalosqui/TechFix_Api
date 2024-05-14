@@ -69,5 +69,6 @@ namespace TechFix.Domain.Tests.Entities
             ClientEntity client = new ClientEntity("ulias", "de lima", "luisemail.com", "12345678");
             Assert.IsNotNull(client.Slug);
         }
+
     }
 }

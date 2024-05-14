@@ -53,12 +53,12 @@ namespace TechFix.Domain.Entities
             UrlImage = urlImage;
         }
 
-        public string GenSlug(string name, string lastName)
+        private string GenSlug(string name, string lastName)
         {
-            name.ToLower();
-            lastName.ToLower();
-            name.Trim();
-            lastName.Trim();
+            name = name.ToLower();
+            lastName = lastName.ToLower();
+            name = name.Trim();
+            lastName = lastName.Trim();
             return name + "-" + lastName.Replace(" ", "-");
         }
 
