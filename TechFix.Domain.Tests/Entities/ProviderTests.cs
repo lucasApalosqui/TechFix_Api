@@ -11,6 +11,8 @@ namespace TechFix.Domain.Tests.Entities
     [TestClass]
     public class ProviderTests
     {
+        public ProviderEntity providerValid = new ProviderEntity("Teste de slug", "teste@email.com", "11939510400", "passwordd", "12456312547856");
+
         [TestMethod]
         public void Dado_um_prestador_com_parametros_invalidos_nao_devera_ser_criado()
         {
@@ -48,9 +50,23 @@ namespace TechFix.Domain.Tests.Entities
         [TestMethod]
         public void Ao_atualizar_a_imagem_a_mesma_deve_ser_alterada()
         {
+            providerValid.UpdateUrlImage("https://imagem");
+            Assert.IsNotNull(providerValid.UrlImage);
+        }
+
+        [TestMethod]
+        public void Ao_adicionar_um_endereco_valido_o_mesmo_devera_ser_criado()
+        {
+            providerValid.AddAddress("rua teodora", "vila matilde", "sao paulo", 1200);
+            Assert.IsNotNull(providerValid.Address);
+        }
+
+        [TestMethod]
+        public void Ao_adicionar_um_endereco_invalido_o_mesmo_nao_deve_ser_criado()
+        {
             ProviderEntity provider = new ProviderEntity("Teste de slug", "teste@email.com", "11939510400", "passwordd", "12456312547856");
-            provider.UpdateUrlImage("https://imagem");
-            Assert.IsNotNull(provider.UrlImage);
+            provider.AddAddress("r", "vila matilde", "sao paulo", 1200);
+            Assert.IsNull(provider.Address);
         }
     }
 }

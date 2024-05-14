@@ -44,6 +44,7 @@ namespace TechFix.Domain.Entities
         public string UrlImage { get; private set; }
         public string PasswordHash { get; private set; }
         public string Cnpj {  get; private set; }
+        public AddressEntity Address { get; private set; }
 
         public void UpdateUrlImage(string urlImage)
         {
@@ -59,6 +60,13 @@ namespace TechFix.Domain.Entities
                 name = name.Replace(" ", "-");
 
             return name;
+        }
+
+        public void AddAddress(string street, string district, string state, int number)
+        {
+            AddressEntity address = new AddressEntity(street, district, state, number, Id);
+            if(address.Valid) 
+                Address = address;
         }
     }
 }
