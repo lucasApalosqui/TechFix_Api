@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TechFix.Domain.Enums;
 using TechFix.Domain.ValueObjects;
 
 namespace TechFix.Domain.Entities
@@ -45,10 +46,18 @@ namespace TechFix.Domain.Entities
         public string PasswordHash { get; private set; }
         public string Cnpj {  get; private set; }
         public AddressEntity Address { get; private set; }
+        public IList<ServiceEntity> Services { get; private set; } = new List<ServiceEntity>();
 
         public void UpdateUrlImage(string urlImage)
         {
             UrlImage = urlImage;
+        }
+
+        public void CreateService(string title, Category category, string description, double amount)
+        {
+            ServiceEntity newService = new ServiceEntity(title, category, this, description, amount);
+            if(newService.Valid)
+                Services.Add(newService);
         }
 
 

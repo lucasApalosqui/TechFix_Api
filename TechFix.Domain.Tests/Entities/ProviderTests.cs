@@ -68,5 +68,12 @@ namespace TechFix.Domain.Tests.Entities
             provider.AddAddress("r", "vila matilde", "sao paulo", 1200);
             Assert.IsNull(provider.Address);
         }
+
+        [TestMethod]
+        public void Ao_adicionar_um_novo_servico_valido_o_mesmo_devera_ser_criado()
+        {
+            providerValid.CreateService("teste de serviço", Enums.Category.Manutencao, "apenas uma descrição de teste para verificação", 120.50);
+            Assert.AreEqual(providerValid.Services.Count, 1);
+        }
     }
 }
