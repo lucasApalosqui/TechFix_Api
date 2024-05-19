@@ -40,11 +40,19 @@ namespace TechFix.Domain.Entities
         public string Description { get; private set; }
         public double Amount { get; private set; }
         public string Title { get; private set; }
+        public IList<HireEntity> Hires { get; private set; } = new List<HireEntity>();
 
         public void UpdateDescription(string newDescription)
         {
             if(newDescription != null && newDescription.Length > 20)
                 Description = newDescription;
+        }
+
+        public void CreateHire(ClientEntity client, DateTime date)
+        {
+            HireEntity newHire = new HireEntity(client, this, date);
+            if(newHire.Valid)
+                Hires.Add(newHire);
         }
 
         public void UpdateAmount(double newAmount)

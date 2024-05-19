@@ -40,6 +40,7 @@ namespace TechFix.Domain.Entities
         public Phone Phone { get; private set; }
         public string UrlImage { get; private set; }
         public string PasswordHash { get; private set; }
+        public IList<HireEntity> Hires { get; private set; } = new List<HireEntity>();
 
         public void UpdatePhone(string phone)
         {

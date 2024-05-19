@@ -14,6 +14,7 @@ namespace TechFix.Domain.Tests.Entities
         private readonly ProviderEntity providerValid = new ProviderEntity("testando", "testando@email.com", "11939512458", "12345678", "14541254125412");
         private readonly ProviderEntity providerInvalid = new ProviderEntity("te", "testando@email.com", "11939512458", "12345678", "14541254125412");
         private readonly string validDescription = "esta é uma descrição válida para testes";
+        private readonly ClientEntity validClient = new ClientEntity("lucas", "apalosqui", "lucas@email.com", "12345678");
 
         [TestMethod]
         public void Dado_um_servico_com_parametros_invalidos_o_mesmo_nao_devera_ser_criado()
@@ -56,6 +57,15 @@ namespace TechFix.Domain.Tests.Entities
             string newDesc = "a descrição foi devidamente alterada";
             validService.UpdateDescription(newDesc);
             Assert.AreEqual(validService.Description, newDesc);
+        }
+
+        [TestMethod]
+        public void Ao_criar_um_hire_o_mesmo_devera_ser_criado()
+        {
+            ServiceEntity validService = new ServiceEntity("teste", Enums.Category.Upgrade, providerValid, validDescription, 100.50);
+            validService.CreateHire(validClient, DateTime.Now.AddDays(2));
+            Assert.Fail();
+            Assert.AreEqual(validService.Hires.Count, 1);
         }
 
     }
