@@ -64,7 +64,6 @@ namespace TechFix.Domain.Tests.Entities
         {
             ServiceEntity validService = new ServiceEntity("teste", Enums.Category.Upgrade, providerValid, validDescription, 100.50);
             validService.CreateHire(validClient, DateTime.Now.AddDays(2));
-            Assert.Fail();
             Assert.AreEqual(validService.Hires.Count, 1);
         }
 
