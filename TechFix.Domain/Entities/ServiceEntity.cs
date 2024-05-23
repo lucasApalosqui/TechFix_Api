@@ -22,7 +22,8 @@ namespace TechFix.Domain.Entities
                     .HasMaxLen(title, 50, "title", "O titulo não pode ultrapassar 50 caracteres")
                 );
             if (provider.Invalid)
-                AddNotification("Provider", "Prestador inválido");
+                AddNotification("provider", "prestador invalido");
+
 
             ProviderId = provider.Id;
             Provider = provider;
