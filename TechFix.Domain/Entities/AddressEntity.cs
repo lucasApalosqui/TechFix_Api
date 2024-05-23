@@ -46,5 +46,11 @@ namespace TechFix.Domain.Entities
             State = state;
             Number = number;
         }
+
+        public void AddComplement(string complement)
+        {
+            if(complement != null && complement.Length > 2)
+                Complement = complement;
+        }
     }
 }
