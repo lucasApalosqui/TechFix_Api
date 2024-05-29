@@ -15,9 +15,19 @@ namespace TechFix.Domain.Tests.Repositories
             
         }
 
+        public IEnumerable<ProviderEntity> GetAll()
+        {
+            return new List<ProviderEntity>();
+        }
+
         public ProviderEntity GetById(Guid id)
         {
             return new ProviderEntity("testando", "teste@email.com","11939512568", "12345678", "12345678912365");
+        }
+
+        public IEnumerable<ProviderEntity> GetByName(string name)
+        {
+            return new List<ProviderEntity>();
         }
 
         public void Update(ProviderEntity provider)

@@ -20,6 +20,11 @@ namespace TechFix.Domain.Tests.Repositories
             return new ClientEntity("lucas", "apalosqui", "lucas@email.com", "12345678");
         }
 
+        public ClientEntity GetProfile(Guid Id)
+        {
+            return new ClientEntity("lucas", "apalosqui", "lucas@email.com", "12345678");
+        }
+
         public void Update(ClientEntity client)
         {
             

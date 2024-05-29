@@ -18,6 +18,16 @@ namespace TechFix.Domain.Tests.Repositories
             return new HireEntity(client, service, DateTime.Now.AddDays(1));
         }
 
+        public IEnumerable<HireEntity> GetClientHires(Guid clientId)
+        {
+            return new List<HireEntity>();
+        }
+
+        public IEnumerable<HireEntity> GetServiceHires(Guid serviceId, Guid providerId)
+        {
+            return new List<HireEntity>();
+        }
+
         public void Update(HireEntity hire)
         {
             
