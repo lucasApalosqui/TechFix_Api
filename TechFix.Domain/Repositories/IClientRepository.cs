@@ -13,5 +13,7 @@ namespace TechFix.Domain.Repositories
         void Update(ClientEntity client);
 
         ClientEntity GetById(Guid id);
+
+        ClientEntity GetProfile(Guid Id);
     }
 }

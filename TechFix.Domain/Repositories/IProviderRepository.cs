@@ -13,5 +13,8 @@ namespace TechFix.Domain.Repositories
         void Update(ProviderEntity provider);
 
         ProviderEntity GetById(Guid id);
+
+        IEnumerable<ProviderEntity> GetAll();
+        IEnumerable<ProviderEntity> GetByName(string name);
     }
 }
