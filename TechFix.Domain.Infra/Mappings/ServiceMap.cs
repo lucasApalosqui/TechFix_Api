@@ -54,7 +54,7 @@ namespace TechFix.Domain.Infra.Mappings
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_Service_Hire");
 
-                
+            builder.Ignore(x => x.Notifications);
                
         }
     }

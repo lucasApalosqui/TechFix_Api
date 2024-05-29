@@ -11,6 +11,8 @@ namespace TechFix.Domain.Entities
     public class ServiceEntity : Entity
     {
 
+        protected ServiceEntity() { }
+
         public ServiceEntity(string title, Category category, ProviderEntity provider, string description, double amount)
         {
             AddNotifications(

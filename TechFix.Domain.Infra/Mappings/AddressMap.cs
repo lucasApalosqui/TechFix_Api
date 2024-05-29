@@ -49,6 +49,8 @@ namespace TechFix.Domain.Infra.Mappings
                 .HasColumnName("ProviderId")
                 .IsRequired();
 
+            builder.Ignore(x => x.Notifications);
+
         }
     }
 }

@@ -11,6 +11,8 @@ namespace TechFix.Domain.Entities
 {
     public class ClientEntity : Entity
     {
+        protected ClientEntity() { }
+
         public ClientEntity(string name, string lastName, string emailAddress, string password)
         {
             AddNotifications(
@@ -22,6 +24,7 @@ namespace TechFix.Domain.Entities
                     .HasMaxLen(lastName, 250, "lastName", "Sobrenome deve conter no máximo 250 caracteres")
                     .HasMinLen(password, 8, "password", "Senha deve conter pelo menos 8 caracteres")
                 );
+
             Email emailVerify = new Email(emailAddress);
             if (emailVerify.Invalid)
                 AddNotification(emailAddress, emailVerify.Notifications.ToString());
@@ -45,8 +48,7 @@ namespace TechFix.Domain.Entities
         public void UpdatePhone(string phone)
         {
             Phone phoneVerify = new Phone(phone);
-            if(phoneVerify.Valid)
-                Phone = phoneVerify;
+
         }
 
         public void UpdateUrlImage(string urlImage)

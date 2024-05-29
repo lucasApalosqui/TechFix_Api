@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Flunt.Notifications;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,8 @@ namespace TechFix.Domain.Infra.Contexts
             modelBuilder.ApplyConfiguration(new ServiceMap());
             modelBuilder.ApplyConfiguration(new ClientMap());
             modelBuilder.ApplyConfiguration(new HireMap());
+
+            modelBuilder.Entity<Notification>().HasNoKey();
         }
     }
 }

@@ -30,6 +30,11 @@ namespace TechFix.Domain.Tests.Repositories
             return new List<ProviderEntity>();
         }
 
+        public ProviderEntity GetMyProfile(Guid Id)
+        {
+            return new ProviderEntity("testando", "teste@email.com", "11939512568", "12345678", "12345678912365");
+        }
+
         public void Update(ProviderEntity provider)
         {
             

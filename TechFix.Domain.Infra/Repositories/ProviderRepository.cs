@@ -46,6 +46,14 @@ namespace TechFix.Domain.Infra.Repositories
                     .Where(ProviderQueries.GetByName(name));
         }
 
+        public ProviderEntity GetMyProfile(Guid Id)
+        {
+            return _context
+                    .Providers
+                    .AsNoTracking()
+                    .FirstOrDefault(ProviderQueries.GetMyProfile(Id));
+        }
+
         public void Update(ProviderEntity provider)
         {
             _context.Entry(provider).State = EntityState.Modified;

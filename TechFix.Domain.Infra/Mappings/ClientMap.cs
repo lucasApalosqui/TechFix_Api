@@ -35,16 +35,27 @@ namespace TechFix.Domain.Infra.Mappings
                 .HasMaxLength(250)
                 .IsRequired();
 
-            builder.Property(x => x.Email)
+            builder.OwnsOne(x => x.Email, email => 
+            {
+                email.Property(x => x.EmailAdress)
                 .HasColumnName("Email")
                 .HasColumnType("NVARCHAR")
                 .HasMaxLength(150)
                 .IsRequired();
 
-            builder.Property(x => x.Phone)
+                email.Ignore(x => x.Notifications);
+            });
+
+
+            builder.OwnsOne(x => x.Phone, phone => 
+            {
+                phone.Property(x => x.PhoneNumber)
                 .HasColumnName("Phone")
                 .HasColumnType("NVARCHAR")
                 .HasMaxLength(11);
+
+                phone.Ignore(x => x.Notifications);
+            });
 
             builder.Property(x => x.PasswordHash)
                 .HasColumnName("PasswordHash")
@@ -62,7 +73,7 @@ namespace TechFix.Domain.Infra.Mappings
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_Client_Hire");
 
-
+            builder.Ignore(x => x.Notifications);
         }
     }
 }

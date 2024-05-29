@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using TechFix.Domain.Entities;
+using TechFix.Domain.ValueObjects;
 
 namespace TechFix.Domain.Infra.Mappings
 {
@@ -25,23 +26,33 @@ namespace TechFix.Domain.Infra.Mappings
                 .HasMaxLength(250)
                 .IsRequired();
 
-            builder.Property(x => x.Email)
-                .HasColumnName("Email")
-                .HasColumnType("NVARCHAR")
-                .HasMaxLength(150)
-                .IsRequired();
+            builder.OwnsOne(x => x.Email, email =>
+            {
 
-            builder.Property(x => x.Phone)
+                email.Property(x => x.EmailAdress)
+                    .HasColumnName("Email")
+                    .HasColumnType("NVARCHAR")
+                    .HasMaxLength(150)
+                    .IsRequired();
+
+                email.Ignore(x => x.Notifications);
+            });
+
+            builder.OwnsOne(x => x.Phone, phone =>
+            {
+                phone.Property(x => x.PhoneNumber)
                 .HasColumnName("Phone")
                 .HasColumnType("VARCHAR")
                 .HasMaxLength(11)
                 .IsRequired();
 
+                phone.Ignore(x => x.Notifications);
+            });
+
             builder.Property(x => x.UrlImage)
                 .HasColumnName("UrlImage")
                 .HasColumnType("NVARCHAR")
-                .HasMaxLength(250)
-                .IsRequired();
+                .HasMaxLength(250);
 
             builder.Property(x => x.PasswordHash)
                 .HasColumnName("PasswordHash")
@@ -66,14 +77,10 @@ namespace TechFix.Domain.Infra.Mappings
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_Provider_Service");
 
-
-            builder.HasIndex(x => x.Email, "IX_Provider_Email")
-                .IsUnique();
-
             builder.HasIndex(x => x.Cnpj, "IX_Provider_Cnpj")
                 .IsUnique();
 
-                
+            builder.Ignore(x => x.Notifications);
 
         }
     }

@@ -11,6 +11,8 @@ namespace TechFix.Domain.Entities
 {
     public class ProviderEntity : Entity
     {
+
+        protected ProviderEntity() { }
         public ProviderEntity(string name, string emailAdress, string phone, string password, string cnpj)
         {
             AddNotifications(
@@ -42,10 +44,10 @@ namespace TechFix.Domain.Entities
         public string Name { get; private set; }
         public Email Email { get; private set; }
         public Phone Phone { get; private set; }
-        public string UrlImage { get; private set; }
+        public string? UrlImage { get; private set; }
         public string PasswordHash { get; private set; }
         public string Cnpj {  get; private set; }
-        public AddressEntity Address { get; private set; }
+        public AddressEntity? Address { get; private set; }
         public IList<ServiceEntity> Services { get; private set; } = new List<ServiceEntity>();
 
         public void UpdateUrlImage(string urlImage)

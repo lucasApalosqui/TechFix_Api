@@ -10,6 +10,7 @@ namespace TechFix.Domain.ValueObjects
 {
     public class Email : Notifiable
     {
+        protected Email() { }
         public Email(string address)
         {
             AddNotifications(

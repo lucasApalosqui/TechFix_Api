@@ -9,6 +9,7 @@ namespace TechFix.Domain.Entities
 {
     public class HireEntity : Entity
     {
+        protected HireEntity() { }
         public HireEntity(ClientEntity client, ServiceEntity service, DateTime date)
         {
             AddNotifications(

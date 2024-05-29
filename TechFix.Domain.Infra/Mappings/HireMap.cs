@@ -35,6 +35,8 @@ namespace TechFix.Domain.Infra.Mappings
             builder.Property(x => x.ClientID)
                 .HasColumnName("ClientId")
                 .IsRequired();
+
+            builder.Ignore(x => x.Notifications);
         }
     }
 }

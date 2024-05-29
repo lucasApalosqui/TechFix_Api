@@ -16,6 +16,11 @@ namespace TechFix.Domain.Queries
             return x => x.Name.ToLower().Contains(name);
         }
 
+        public static Expression<Func<ProviderEntity, bool>> GetMyProfile(Guid Id)
+        {
+            return x => x.Id == Id;
+        }
+
 
     }
 }

@@ -26,6 +26,7 @@ namespace TechFix.Domain.Commands.Providers
             if (phoneVerify.Invalid)
                 AddNotification(phone, phoneVerify.Notifications.ToString());
 
+
             Name = name;
             EmailAddress = emailAddress;
             Phone = phone;

@@ -11,6 +11,7 @@ namespace TechFix.Domain.Entities
 {
     public class AddressEntity : Entity
     {
+        protected AddressEntity() { }
         public AddressEntity(string street, string district, string state, int number, Guid providerId)
         {
             AddNotifications(

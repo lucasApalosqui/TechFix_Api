@@ -10,6 +10,7 @@ using TechFix.Domain.Commands.Providers;
 using TechFix.Domain.Entities;
 using TechFix.Domain.Handlers.Contracts;
 using TechFix.Domain.Repositories;
+using TechFix.Domain.ViewModels.Providers;
 
 namespace TechFix.Domain.Handlers.ProviderHandlers
 {
@@ -32,7 +33,17 @@ namespace TechFix.Domain.Handlers.ProviderHandlers
 
             _providerRepository.Create(provider);
 
-            return new GenericCommandResult(true, "Prestador criado com sucesso!", provider);
+            var providerResponse = new GetProviderByIdViewModel
+            {
+                Id = provider.Id,
+                Name = provider.Name,
+                Email = provider.Email.EmailAdress,
+                Cnpj = provider.Cnpj,
+                Phone = provider.Phone.MaskNumber(),
+                UrlImage = provider.UrlImage
+            };
+
+            return new GenericCommandResult(true, "Prestador criado com sucesso!", providerResponse);
         }
 
         public ICommandResult Handle(UpdateUrlProviderCommand command)
