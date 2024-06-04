@@ -88,5 +88,27 @@ namespace TechFix.Domain.Api.Controllers
 
         }
 
+        [Route("v1/provider/list/{name}")]
+        [HttpGet]
+        public GenericCommandResult GetByName(string name, [FromServices] IProviderRepository repository)
+        {
+            var providers = repository.GetByName(name);
+            if (providers.Count() == 0)
+                return new GenericCommandResult(false, "Nenhum prestador encontrado", null);
+
+            var response = new List<GetAllProvidersViewModel>();
+            foreach (var provider in providers)
+            {
+                response.Add(new GetAllProvidersViewModel
+                {
+                    ProviderName = provider.Name,
+                    Email = provider.Email.EmailAdress,
+                    Phones = provider.Phone.PhoneNumber
+                });
+            }
+
+            return new GenericCommandResult(true, "prestadores encontrados", response);
+        }
+
     }
 }
