@@ -33,6 +33,11 @@ namespace TechFix.Domain.Infra.Repositories
                     .Where(ProviderQueries.GetAll());
         }
 
+        public ProviderEntity GetByEmail(string email)
+        {
+            return _context.Providers.FirstOrDefault(x => x.Email.EmailAdress == email);
+        }
+
         public ProviderEntity GetById(Guid id)
         {
             return _context.Providers.FirstOrDefault(x => x.Id == id);

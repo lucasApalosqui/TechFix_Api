@@ -29,7 +29,13 @@ namespace TechFix.Domain.Handlers.ProviderHandlers
             if (command.Invalid)
                 return new GenericCommandResult(false, "Erro ao criar prestador", command.Notifications);
 
+            var emailVerify = _providerRepository.GetByEmail(command.EmailAddress);
+            if (emailVerify != null)
+                return new GenericCommandResult(false, "Email já cadastrado", command.EmailAddress);
+
             var provider = new ProviderEntity(command.Name, command.EmailAddress, command.Phone, command.Password, command.Cnpj);
+
+            
 
             _providerRepository.Create(provider);
 
