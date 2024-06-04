@@ -56,5 +56,12 @@ namespace TechFix.Domain.Api.Controllers
             return (GenericCommandResult)handler.Handle(command);
         }
 
+        [Route("v1/provider/my-profile/services/create-service")]
+        [HttpPut]
+        public GenericCommandResult CreateService([FromBody]AddProviderServiceCommand command, [FromServices]ProviderHandler handler)
+        {
+            return (GenericCommandResult)handler.Handle(command);
+        }
+
     }
 }

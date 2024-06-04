@@ -108,7 +108,15 @@ namespace TechFix.Domain.Handlers.ProviderHandlers
 
             _providerRepository.Update(provider);
 
-            return new GenericCommandResult(true, "Serviço criado com sucesso", provider);
+            var response = new ServiceCreateViewModel
+            {
+                Title = command.Title,
+                Description = command.Description,
+                Category = command.Category.ToString(),
+                Amount = command.Amount
+            };
+
+            return new GenericCommandResult(true, "Serviço criado com sucesso", response);
         }
 
     }
