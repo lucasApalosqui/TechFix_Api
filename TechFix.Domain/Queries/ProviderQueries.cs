@@ -8,7 +8,7 @@ namespace TechFix.Domain.Queries
     {
         public static Expression<Func<ProviderEntity, bool>> GetAll()
         {
-            return x => x.Valid;
+            return x => x.Id != null;
         }
 
         public static Expression<Func<ProviderEntity, bool>> GetByName(string name)

@@ -12,7 +12,7 @@ namespace TechFix.Domain.Api.Controllers
     {
         [Route("v1/provider/register")]
         [HttpPost]
-        public GenericCommandResult CreateProvider([FromBody]CreateProviderCommand command, [FromServices]ProviderHandler handler)
+        public GenericCommandResult CreateProvider([FromBody] CreateProviderCommand command, [FromServices] ProviderHandler handler)
         {
             return (GenericCommandResult)handler.Handle(command);
         }
@@ -27,7 +27,7 @@ namespace TechFix.Domain.Api.Controllers
             if (provider == null)
                 return new GenericCommandResult(false, "Provedor inválido", providerId);
 
-            var response =  new GetProviderByIdViewModel
+            var response = new GetProviderByIdViewModel
             {
                 Id = provider.Id,
                 Name = provider.Name,
@@ -44,23 +44,48 @@ namespace TechFix.Domain.Api.Controllers
 
         [Route("v1/provider/my-profile/update-url")]
         [HttpPut]
-        public GenericCommandResult UpdateUrlImage([FromBody]UpdateUrlProviderCommand command, [FromServices]ProviderHandler handler)
+        public GenericCommandResult UpdateUrlImage([FromBody] UpdateUrlProviderCommand command, [FromServices] ProviderHandler handler)
         {
             return (GenericCommandResult)handler.Handle(command);
         }
 
         [Route("v1/provider/my-profile/add-address")]
         [HttpPut]
-        public GenericCommandResult UpdateAddress([FromBody]AddProviderAddressCommand command, [FromServices]ProviderHandler handler)
+        public GenericCommandResult UpdateAddress([FromBody] AddProviderAddressCommand command, [FromServices] ProviderHandler handler)
         {
             return (GenericCommandResult)handler.Handle(command);
         }
 
         [Route("v1/provider/my-profile/services/create-service")]
         [HttpPut]
-        public GenericCommandResult CreateService([FromBody]AddProviderServiceCommand command, [FromServices]ProviderHandler handler)
+        public GenericCommandResult CreateService([FromBody] AddProviderServiceCommand command, [FromServices] ProviderHandler handler)
         {
             return (GenericCommandResult)handler.Handle(command);
+        }
+
+        [Route("v1/provider/list")]
+        [HttpGet]
+        public GenericCommandResult GetAll([FromServices] IProviderRepository repository)
+        {
+            var providers = repository.GetAll();
+
+            var response = new List<GetAllProvidersViewModel>();
+
+            if (providers.Count() == 0)
+                return new GenericCommandResult(false, "Nenhum provedor encontrado", null);
+
+            foreach (var provider in providers)
+            {
+                response.Add(new GetAllProvidersViewModel
+                {
+                    ProviderName = provider.Name,
+                    Email = provider.Email.EmailAdress,
+                    Phones = provider.Phone.PhoneNumber
+                });
+            }
+
+            return new GenericCommandResult(true, "Lista de provedores", response);
+
         }
 
     }
