@@ -10,6 +10,11 @@ namespace TechFix.Domain.Tests.Repositories
 {
     public class FakeAddressRepository : IAddressRepository
     {
+        public void Create(AddressEntity address)
+        {
+            
+        }
+
         public AddressEntity GetAddress(Guid providerId)
         {
             return new AddressEntity("rua teste", "vila madalena", "sao paulo", 12, providerId);

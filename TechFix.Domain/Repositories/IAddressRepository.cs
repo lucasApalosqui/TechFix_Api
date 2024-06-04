@@ -7,6 +7,8 @@ namespace TechFix.Domain.Repositories
     {
         void Update(AddressEntity address);
 
+        void Create(AddressEntity address);
+
         AddressEntity GetByIdAndProvider(Guid addressId, Guid providerId);
 
         AddressEntity GetAddress(Guid providerId);

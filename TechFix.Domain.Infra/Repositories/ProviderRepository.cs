@@ -56,7 +56,7 @@ namespace TechFix.Domain.Infra.Repositories
 
         public void Update(ProviderEntity provider)
         {
-            _context.Entry(provider).State = EntityState.Modified;
+            _context.Update(provider);
             _context.SaveChanges();
         }
     }

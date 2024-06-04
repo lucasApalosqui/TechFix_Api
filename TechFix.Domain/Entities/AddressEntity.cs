@@ -24,11 +24,13 @@ namespace TechFix.Domain.Entities
                     .HasMinLen(state, 3, "state", "estado deve conter ao menos 3 caracteres")
                     .HasMaxLen(state, 100, "estado", "Bairro não deve ultrapassar 100 caracteres")
                 );
+
             Street = street;
             District = district;
             State = state;
             Number = number;
             ProviderId = providerId;
+            Slug = Id.ToString();
 
         }
 
@@ -36,7 +38,7 @@ namespace TechFix.Domain.Entities
         public string District { get; private set; }
         public string State { get; private set; }
         public int Number {  get; private set; }
-        public string Complement {  get; private set; }
+        public string? Complement {  get; private set; }
         public Guid ProviderId { get; private set; }
         public ProviderEntity Provider { get; private set; }
 

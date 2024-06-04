@@ -15,6 +15,12 @@ namespace TechFix.Domain.Infra.Repositories
             _context = context;
         }
 
+        public void Create(AddressEntity address)
+        {
+            _context.Add(address);
+            _context.SaveChanges();
+        }
+
         public AddressEntity GetAddress(Guid providerId)
         {
             return _context

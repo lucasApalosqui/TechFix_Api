@@ -19,11 +19,15 @@ namespace TechFix.Domain.Api.Controllers
 
         [Route("v1/provider/{id}")]
         [HttpGet]
-        public GetProviderByIdViewModel GetProviderProfile(string id, [FromServices] IProviderRepository repository)
+        public GenericCommandResult GetProviderProfile(string id, [FromServices] IProviderRepository repository)
         {
             var providerId = new Guid(id);
             var provider = repository.GetMyProfile(providerId);
-            return new GetProviderByIdViewModel
+
+            if (provider == null)
+                return new GenericCommandResult(false, "Provedor inválido", providerId);
+
+            var response =  new GetProviderByIdViewModel
             {
                 Id = provider.Id,
                 Name = provider.Name,
@@ -33,6 +37,23 @@ namespace TechFix.Domain.Api.Controllers
                 Cnpj = provider.Cnpj
 
             };
+
+            return new GenericCommandResult(true, "Sucesso ao retornar provedor", response);
+
+        }
+
+        [Route("v1/provider/my-profile/update-url")]
+        [HttpPut]
+        public GenericCommandResult UpdateUrlImage([FromBody]UpdateUrlProviderCommand command, [FromServices]ProviderHandler handler)
+        {
+            return (GenericCommandResult)handler.Handle(command);
+        }
+
+        [Route("v1/provider/my-profile/add-address")]
+        [HttpPut]
+        public GenericCommandResult UpdateAddress([FromBody]AddProviderAddressCommand command, [FromServices]ProviderHandler handler)
+        {
+            return (GenericCommandResult)handler.Handle(command);
         }
 
     }

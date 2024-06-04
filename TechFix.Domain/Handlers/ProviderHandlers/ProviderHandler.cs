@@ -58,7 +58,17 @@ namespace TechFix.Domain.Handlers.ProviderHandlers
 
             _providerRepository.Update(provider);
 
-            return new GenericCommandResult(true, "Url Atualizado com sucesso", provider);
+            var providerResponse = new GetProviderByIdViewModel 
+            {
+                Id= provider.Id,
+                Name = provider.Name,
+                Email = provider.Email.EmailAdress,
+                Cnpj = provider.Cnpj,
+                Phone = provider.Phone.MaskNumber(),
+                UrlImage = provider.UrlImage
+            };
+
+            return new GenericCommandResult(true, "Url Atualizado com sucesso", providerResponse);
         }
 
         public ICommandResult Handle(AddProviderAddressCommand command)
@@ -72,7 +82,19 @@ namespace TechFix.Domain.Handlers.ProviderHandlers
 
             _providerRepository.Update(provider);
 
-            return new GenericCommandResult(true, "Endereço adicionado com sucesso!", provider);
+            var providerResponse = new ProviderAddressViewModel
+            {
+                Id = provider.Id,
+                Name = provider.Name,
+                Cnpj = provider.Cnpj,
+                Street = provider.Address.Street,
+                District = provider.Address.District,
+                State = provider.Address.State,
+                Number = provider.Address.Number,
+                Complement = provider.Address.Complement
+            };
+
+            return new GenericCommandResult(true, "Endereço adicionado com sucesso!", providerResponse);
         }
 
         public ICommandResult Handle(AddProviderServiceCommand command)
@@ -88,5 +110,6 @@ namespace TechFix.Domain.Handlers.ProviderHandlers
 
             return new GenericCommandResult(true, "Serviço criado com sucesso", provider);
         }
+
     }
 }
