@@ -14,11 +14,8 @@ namespace TechFix.Domain.Commands.Services
     {
         public CreateServiceHireCommand() { }
 
-        public CreateServiceHireCommand(ClientEntity client, DateTime date, Guid serviceId, Guid providerId)
+        public CreateServiceHireCommand(ClientEntity? client, DateTime date, Guid serviceId, Guid providerId)
         {
-            if (client.Invalid)
-                AddNotification("cliente", "cliente inválido");
-
             Client = client;
             Date = date;
             ServiceId = serviceId;
@@ -39,6 +36,9 @@ namespace TechFix.Domain.Commands.Services
                     .IsNotNull(ServiceId, "service", "serviço inválido")
                     .IsNotNull(ProviderId, "provider", "Prestador inválido")
                 );
+
+            if (Client.Invalid)
+                AddNotification("cliente invalido", Client.Notifications.ToString());
         }
     }
 }

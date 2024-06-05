@@ -17,6 +17,9 @@ namespace TechFix.Domain.Repositories
         IEnumerable<ServiceEntity> GetByProviderName(string name);
         IEnumerable<ServiceEntity> GetByCategory(Category category);
         IEnumerable<ServiceEntity> GetByAmount(double minAmount, double maxAmount);
+        IEnumerable<ServiceEntity> GetByProviderId(Guid providerId);
+        IEnumerable<ServiceEntity> GetByTitle(string title);
+        ServiceEntity GetById(Guid id);
 
     }
 }

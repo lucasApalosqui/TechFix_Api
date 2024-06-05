@@ -13,7 +13,7 @@ namespace TechFix.Domain.Queries
     {
         public static Expression<Func<ServiceEntity, bool>> GetAll()
         {
-            return x => x.Valid;
+            return x => x.Id != null;
         }
 
         public static Expression<Func<ServiceEntity, bool>> GetByProviderName(string provider)
@@ -34,6 +34,16 @@ namespace TechFix.Domain.Queries
         public static Expression<Func<ServiceEntity, bool>> GetByAmount(double minAmount, double maxAmount)
         {
             return x => x.Amount >= minAmount && x.Amount <= maxAmount;
+        }
+
+        public static Expression<Func<ServiceEntity, bool>> GetByProviderId(Guid providerId)
+        {
+            return x => x.ProviderId == providerId;
+        }
+
+        public static Expression<Func<ServiceEntity, bool>> GetByServiceId(Guid serviceId)
+        {
+            return x => x.Id == serviceId;
         }
     }
 }

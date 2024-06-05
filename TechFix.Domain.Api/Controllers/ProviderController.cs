@@ -17,7 +17,7 @@ namespace TechFix.Domain.Api.Controllers
             return (GenericCommandResult)handler.Handle(command);
         }
 
-        [Route("v1/provider/{id}")]
+        [Route("v1/provider/my-profile/{id}")]
         [HttpGet]
         public GenericCommandResult GetProviderProfile(string id, [FromServices] IProviderRepository repository)
         {
@@ -63,7 +63,7 @@ namespace TechFix.Domain.Api.Controllers
             return (GenericCommandResult)handler.Handle(command);
         }
 
-        [Route("v1/provider/list")]
+        [Route("v1/providers/list")]
         [HttpGet]
         public GenericCommandResult GetAll([FromServices] IProviderRepository repository)
         {
@@ -88,7 +88,7 @@ namespace TechFix.Domain.Api.Controllers
 
         }
 
-        [Route("v1/provider/list/{name}")]
+        [Route("v1/providers/list/{name}")]
         [HttpGet]
         public GenericCommandResult GetByName(string name, [FromServices] IProviderRepository repository)
         {
