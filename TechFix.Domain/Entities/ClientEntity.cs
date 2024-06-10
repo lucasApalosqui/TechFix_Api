@@ -41,14 +41,15 @@ namespace TechFix.Domain.Entities
         public string LastName { get; private set; }
         public Email Email { get; private set; }
         public Phone Phone { get; private set; }
-        public string UrlImage { get; private set; }
+        public string? UrlImage { get; private set; }
         public string PasswordHash { get; private set; }
         public IList<HireEntity> Hires { get; private set; } = new List<HireEntity>();
 
         public void UpdatePhone(string phone)
         {
             Phone phoneVerify = new Phone(phone);
-
+            if(phoneVerify.Valid)
+                Phone = phoneVerify;
         }
 
         public void UpdateUrlImage(string urlImage)

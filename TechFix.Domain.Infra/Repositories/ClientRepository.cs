@@ -23,7 +23,9 @@ namespace TechFix.Domain.Infra.Repositories
 
         public ClientEntity GetById(Guid id)
         {
-            return _context.Clients.FirstOrDefault(x => x.Id == id);
+            return _context
+                    .Clients
+                    .FirstOrDefault(x => x.Id == id);
         }
 
         public ClientEntity GetProfile(Guid Id)
@@ -31,6 +33,7 @@ namespace TechFix.Domain.Infra.Repositories
             return _context
                     .Clients
                     .AsNoTracking()
+                    .Include(x => x.Hires)
                     .FirstOrDefault(ClientQueries.GetProfile(Id));
         }
 

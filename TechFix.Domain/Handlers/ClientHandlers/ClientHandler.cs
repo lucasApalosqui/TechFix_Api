@@ -10,6 +10,7 @@ using TechFix.Domain.Commands.Contracts;
 using TechFix.Domain.Entities;
 using TechFix.Domain.Handlers.Contracts;
 using TechFix.Domain.Repositories;
+using TechFix.Domain.ViewModels.Clients;
 
 namespace TechFix.Domain.Handlers.ClientHandlers
 {
@@ -32,7 +33,14 @@ namespace TechFix.Domain.Handlers.ClientHandlers
 
             _clientRepository.Create(client);
 
-            return new GenericCommandResult(true, "Cliente criado com sucesso", client);
+            var response = new CreateClientViewModel 
+            {
+                Id = client.Id,
+                FullName = $"{client.Name} {client.LastName}",
+                Email = client.Email.EmailAdress
+            };
+
+            return new GenericCommandResult(true, "Cliente criado com sucesso", response);
         }
 
         public ICommandResult Handle(UpdateClientUrlCommand command)
@@ -47,7 +55,15 @@ namespace TechFix.Domain.Handlers.ClientHandlers
 
             _clientRepository.Update(client);
 
-            return new GenericCommandResult(true, "atualizado com sucesso", client);
+            var response = new UpdateClientUrlViewModel 
+            {
+                Id = client.Id,
+                FullName = $"{client.Name} {client.LastName}",
+                Email = client.Email.EmailAdress,
+                UrlImage = client.UrlImage
+            };
+
+            return new GenericCommandResult(true, "atualizado com sucesso", response);
         }
 
         public ICommandResult Handle(UpdateClientPhoneCommand command)
@@ -62,7 +78,15 @@ namespace TechFix.Domain.Handlers.ClientHandlers
 
             _clientRepository.Update(client);
 
-            return new GenericCommandResult(true, "Atualizado com sucesso", client);
+            var response = new AddClientPhoneViewModel 
+            {
+                Id = client.Id,
+                FullName = $"{client.Name} {client.LastName}",
+                Email = client.Email.EmailAdress,
+                PhoneNumber = client.Phone.MaskNumber()
+            };
+
+            return new GenericCommandResult(true, "Atualizado com sucesso", response);
         }
     }
 }
