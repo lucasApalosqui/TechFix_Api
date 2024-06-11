@@ -1,10 +1,5 @@
 ﻿using Flunt.Notifications;
 using Flunt.Validations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TechFix.Domain.Commands.Contracts;
 using TechFix.Domain.Entities;
 
@@ -14,15 +9,15 @@ namespace TechFix.Domain.Commands.Services
     {
         public CreateServiceHireCommand() { }
 
-        public CreateServiceHireCommand(ClientEntity? client, DateTime date, Guid serviceId, Guid providerId)
+        public CreateServiceHireCommand(Guid clientId, DateTime date, Guid serviceId, Guid providerId)
         {
-            Client = client;
+            ClientId = clientId;
             Date = date;
             ServiceId = serviceId;
             ProviderId = providerId;
         }
 
-        public ClientEntity Client { get; set; }
+        public Guid ClientId { get; set; }
         public DateTime Date { get; set; }
         public Guid ServiceId { get; set; }
         public Guid ProviderId { get; set; }
@@ -36,9 +31,6 @@ namespace TechFix.Domain.Commands.Services
                     .IsNotNull(ServiceId, "service", "serviço inválido")
                     .IsNotNull(ProviderId, "provider", "Prestador inválido")
                 );
-
-            if (Client.Invalid)
-                AddNotification("cliente invalido", Client.Notifications.ToString());
         }
     }
 }

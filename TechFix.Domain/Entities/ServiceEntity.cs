@@ -51,9 +51,9 @@ namespace TechFix.Domain.Entities
                 Description = newDescription;
         }
 
-        public void CreateHire(ClientEntity client, DateTime date)
+        public void CreateHire(Guid clientId, DateTime date)
         {
-            HireEntity newHire = new HireEntity(client, this, date);
+            HireEntity newHire = new HireEntity(clientId, this, date);
             if(newHire.Valid)
                 Hires.Add(newHire);
         }

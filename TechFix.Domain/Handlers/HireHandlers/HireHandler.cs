@@ -9,6 +9,7 @@ using TechFix.Domain.Commands.Contracts;
 using TechFix.Domain.Commands.Hires;
 using TechFix.Domain.Handlers.Contracts;
 using TechFix.Domain.Repositories;
+using TechFix.Domain.ViewModels.Hires;
 
 namespace TechFix.Domain.Handlers.HireHandlers
 {
@@ -32,7 +33,14 @@ namespace TechFix.Domain.Handlers.HireHandlers
 
             _hireRepository.Update(hire);
 
-            return new GenericCommandResult(true, "Atualizado com sucesso", hire);
+            var response = new CancelHireViewModel 
+            {
+                Id = hire.Id,
+                Date = hire.Date,
+                Active = hire.Active
+            };
+
+            return new GenericCommandResult(true, "Atualizado com sucesso", response);
         }
     }
 }

@@ -27,10 +27,10 @@ namespace TechFix.Domain.Tests.Queries
             ServiceEntity _service4 = new ServiceEntity("serviço 4", Enums.Category.Limpeza, _provider, "apenas uma descrição valida para testes", 120);
 
             _hires = new List<HireEntity>();
-            _hires.Add(new HireEntity(_client1, _service1, DateTime.Now.AddDays(1)));
-            _hires.Add(new HireEntity(_client1, _service2, DateTime.Now.AddDays(1)));
-            _hires.Add(new HireEntity(_client2, _service1, DateTime.Now.AddDays(1)));
-            _hires.Add(new HireEntity(_client3, _service1, DateTime.Now.AddDays(1)));
+            _hires.Add(new HireEntity(_client1.Id, _service1, DateTime.Now.AddDays(1)));
+            _hires.Add(new HireEntity(_client1.Id, _service2, DateTime.Now.AddDays(1)));
+            _hires.Add(new HireEntity(_client2.Id, _service1, DateTime.Now.AddDays(1)));
+            _hires.Add(new HireEntity(_client3.Id, _service1, DateTime.Now.AddDays(1)));
         }
 
         [TestMethod]
@@ -50,10 +50,10 @@ namespace TechFix.Domain.Tests.Queries
             ServiceEntity _service4 = new ServiceEntity("serviço 4", Enums.Category.Limpeza, _provider, "apenas uma descrição valida para testes", 120);
 
             _hires = new List<HireEntity>();
-            _hires.Add(new HireEntity(_client1, _service1, DateTime.Now.AddDays(1)));
-            _hires.Add(new HireEntity(_client1, _service2, DateTime.Now.AddDays(1)));
-            _hires.Add(new HireEntity(_client2, _service1, DateTime.Now.AddDays(1)));
-            _hires.Add(new HireEntity(_client3, _service1, DateTime.Now.AddDays(1)));
+            _hires.Add(new HireEntity(_client1.Id, _service1, DateTime.Now.AddDays(1)));
+            _hires.Add(new HireEntity(_client1.Id, _service2, DateTime.Now.AddDays(1)));
+            _hires.Add(new HireEntity(_client2.Id, _service1, DateTime.Now.AddDays(1)));
+            _hires.Add(new HireEntity(_client3.Id, _service1, DateTime.Now.AddDays(1)));
 
             var result = _hires.AsQueryable().Where(HireQueries.GetServiceHires(_service1.Id, _service1.ProviderId));
 

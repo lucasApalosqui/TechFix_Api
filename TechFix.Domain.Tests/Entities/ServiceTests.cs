@@ -63,7 +63,7 @@ namespace TechFix.Domain.Tests.Entities
         public void Ao_criar_um_hire_o_mesmo_devera_ser_criado()
         {
             ServiceEntity validService = new ServiceEntity("teste", Enums.Category.Upgrade, providerValid, validDescription, 100.50);
-            validService.CreateHire(validClient, DateTime.Now.AddDays(2));
+            validService.CreateHire(validClient.Id, DateTime.Now.AddDays(2));
             Assert.AreEqual(validService.Hires.Count, 1);
         }
 

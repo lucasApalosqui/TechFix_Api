@@ -15,7 +15,7 @@ namespace TechFix.Domain.Tests.Repositories
             var client = new ClientEntity("lucas", "apalsoqui", "lucas@email.com", "12345678");
             var provider = new ProviderEntity("testes", "teste@email.com", "11939510205","12345678", "12345678912345");
             var service = new ServiceEntity("servico", Enums.Category.Montagem, provider, "apenas uma descrição valida para realizar testes", 200);
-            return new HireEntity(client, service, DateTime.Now.AddDays(1));
+            return new HireEntity(client.Id, service, DateTime.Now.AddDays(1));
         }
 
         public IEnumerable<HireEntity> GetClientHires(Guid clientId)

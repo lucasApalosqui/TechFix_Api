@@ -25,6 +25,8 @@ namespace TechFix.Domain.Infra.Repositories
         {
             return _context
                     .Clients
+                    .Include(x => x.Hires)
+                    .ThenInclude(x => x.Service)
                     .FirstOrDefault(x => x.Id == id);
         }
 

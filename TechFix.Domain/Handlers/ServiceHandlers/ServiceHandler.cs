@@ -9,6 +9,7 @@ using TechFix.Domain.Commands.Contracts;
 using TechFix.Domain.Commands.Services;
 using TechFix.Domain.Handlers.Contracts;
 using TechFix.Domain.Repositories;
+using TechFix.Domain.ViewModels.Hires;
 
 namespace TechFix.Domain.Handlers.ServiceHandlers
 {
@@ -28,11 +29,21 @@ namespace TechFix.Domain.Handlers.ServiceHandlers
                 return new GenericCommandResult(false, "Erro ao criar contrato", command.Notifications);
 
             var service = _serviceRepository.GetByIdAndProvider(command.ServiceId, command.ProviderId);
-            service.CreateHire(command.Client, command.Date);
+            service.CreateHire(command.ClientId, command.Date);
 
             _serviceRepository.Update(service);
 
-            return new GenericCommandResult(true, "Contrato realizado com sucesso", service);
+            var response = new GetClientHiresViewModel 
+            {
+                ClientId = command.ClientId,
+                ServiceId = command.ServiceId,
+                ServiceTitle = service.Title,
+                Date = command.Date,
+                IsActive = true,
+                ServiceAmount = service.Amount
+            };
+
+            return new GenericCommandResult(true, "Contrato realizado com sucesso", response);
         }
 
         public ICommandResult Handle(UpdateServiceAmountCommand command)

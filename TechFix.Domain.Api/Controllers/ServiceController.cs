@@ -192,11 +192,11 @@ namespace TechFix.Domain.Api.Controllers
             return new GenericCommandResult(true, "Serviço encontrado", response);
         }
 
-        [Route("v1/service/{serviceId}/create-hire")]
+        [Route("v1/service/create-hire")]
         [HttpPut]
-        public GenericCommandResult CreateHire([FromBody]CreateServiceHireCommand command, [FromServices]ServiceHandler handler, [FromServices]IClientRepository ClientRepo)
+        public GenericCommandResult CreateHire([FromBody]CreateServiceHireCommand command, [FromServices]ServiceHandler handler, [FromServices]IClientRepository ClientRepo, [FromServices]IServiceRepository serviceRepo)
         {
-            return new GenericCommandResult(false, "a implementar", null);
+            return (GenericCommandResult)handler.Handle(command);
         }
     }
 }

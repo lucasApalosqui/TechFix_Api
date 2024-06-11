@@ -18,8 +18,8 @@ namespace TechFix.Domain.Tests.Handlers.ServiceHandlers
         private GenericCommandResult _commandResult = new GenericCommandResult();
         private readonly ServiceHandler _serviceHandler = new ServiceHandler(new FakeServiceRepository());
 
-        private readonly CreateServiceHireCommand _invalidCreateHireCommand = new CreateServiceHireCommand(new ClientEntity("lucas", "apalosqui", "lucas@email.com", "12345678"), DateTime.Now, Guid.NewGuid(), Guid.NewGuid());
-        private readonly CreateServiceHireCommand _validCreateHireCommand = new CreateServiceHireCommand(new ClientEntity("lucas", "apalosqui", "lucas@email.com", "12345678"), DateTime.Now.AddDays(2), Guid.NewGuid(), Guid.NewGuid());
+        private readonly CreateServiceHireCommand _invalidCreateHireCommand = new CreateServiceHireCommand(Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), Guid.NewGuid());
+        private readonly CreateServiceHireCommand _validCreateHireCommand = new CreateServiceHireCommand(Guid.NewGuid(), DateTime.Now.AddDays(2), Guid.NewGuid(), Guid.NewGuid());
 
         private readonly UpdateServiceAmountCommand _invalidUpAmountCommand = new UpdateServiceAmountCommand(-100, Guid.NewGuid(), Guid.NewGuid());
         private readonly UpdateServiceAmountCommand _validUpAmountCommand = new UpdateServiceAmountCommand(200, Guid.NewGuid(), Guid.NewGuid());

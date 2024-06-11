@@ -10,22 +10,19 @@ namespace TechFix.Domain.Entities
     public class HireEntity : Entity
     {
         protected HireEntity() { }
-        public HireEntity(ClientEntity client, ServiceEntity service, DateTime date)
+        public HireEntity(Guid clientId, ServiceEntity service, DateTime date)
         {
             AddNotifications(
                 new Contract()
                     .Requires()
                     .IsGreaterThan(date, DateTime.Now, "date", "Data precisa ser maior do que hoje")
                 );
-            if (client.Invalid)
-                AddNotification("client", "Cliente inválido");
 
             if (service.Invalid)
                 AddNotification("service", "Serviço inválido");
 
-            ClientID = client.Id;
+            ClientID = clientId;
             ServiceId = service.Id;
-            Client = client;
             Service = service;
             Date = date;
             Active = true;
@@ -42,6 +39,11 @@ namespace TechFix.Domain.Entities
         public void CancelHire()
         {
             Active = false;
+        }
+
+        public void AddClient(ClientEntity client)
+        {
+            Client = client;
         }
     }
 }

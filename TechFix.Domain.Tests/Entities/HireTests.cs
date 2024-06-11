@@ -21,15 +21,15 @@ namespace TechFix.Domain.Tests.Entities
         public void Dado_um_hire_invalido_o_mesmo_nao_devera_ser_criado()
         {
             int errors = 0;
-            HireEntity hiInvalidClient = new HireEntity(invalidClient, validService, DateTime.Now.AddDays(2));
+            HireEntity hiInvalidClient = new HireEntity(invalidClient.Id, validService, DateTime.Now.AddDays(2));
             if(hiInvalidClient.Invalid)
                 errors += 1;
 
-            HireEntity hiInvalidService = new HireEntity(validClient, invalidService, DateTime.Now.AddDays(2));
+            HireEntity hiInvalidService = new HireEntity(validClient.Id, invalidService, DateTime.Now.AddDays(2));
             if (hiInvalidService.Invalid)
                 errors += 1;
 
-            HireEntity hiInvalidDate = new HireEntity(validClient, validService, DateTime.Now);
+            HireEntity hiInvalidDate = new HireEntity(validClient.Id, validService, DateTime.Now);
             if (hiInvalidDate.Invalid)
                 errors += 1;
             
@@ -39,7 +39,7 @@ namespace TechFix.Domain.Tests.Entities
         [TestMethod]
         public void Ao_cancelar_o_hire_o_status_deve_ser_falso()
         {
-            HireEntity validHire = new HireEntity(validClient, validService, DateTime.Now.AddDays(2));
+            HireEntity validHire = new HireEntity(validClient.Id, validService, DateTime.Now.AddDays(2));
             validHire.CancelHire();
             Assert.AreEqual(validHire.Active, false);
         }
