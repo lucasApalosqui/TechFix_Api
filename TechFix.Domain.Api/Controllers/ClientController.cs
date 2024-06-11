@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using TechFix.Domain.Commands;
 using TechFix.Domain.Commands.Clients;
+using TechFix.Domain.Entities;
 using TechFix.Domain.Handlers.ClientHandlers;
+using TechFix.Domain.Infra.Repositories;
 using TechFix.Domain.Repositories;
 using TechFix.Domain.ViewModels.Clients;
 
@@ -12,6 +15,7 @@ namespace TechFix.Domain.Api.Controllers
     {
         [Route("v1/client/register")]
         [HttpPost]
+        [AllowAnonymous]
         public GenericCommandResult CreateClient([FromBody]CreateClientCommand command, [FromServices]ClientHandler handler)
         {
             return (GenericCommandResult)handler.Handle(command);

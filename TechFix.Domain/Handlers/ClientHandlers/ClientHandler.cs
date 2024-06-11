@@ -30,7 +30,7 @@ namespace TechFix.Domain.Handlers.ClientHandlers
             if (command.Invalid)
                 return new GenericCommandResult(false, "O cliente está inválido", command.Notifications);
 
-            var client = new ClientEntity(command.Name, command.LastName, command.EmailAddress, PasswordHasher.Hash(command.Password));
+            ClientEntity client = new ClientEntity(command.Name, command.LastName, command.EmailAddress, PasswordHasher.Hash(command.Password));
 
             _clientRepository.Create(client);
 

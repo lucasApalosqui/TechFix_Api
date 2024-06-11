@@ -1,7 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Reflection.Metadata;
 using TechFix.Domain.Commands;
 using TechFix.Domain.Commands.Providers;
+using TechFix.Domain.Entities;
 using TechFix.Domain.Handlers.ProviderHandlers;
+using TechFix.Domain.Infra.Repositories;
 using TechFix.Domain.Repositories;
 using TechFix.Domain.ViewModels.Providers;
 
@@ -12,7 +16,8 @@ namespace TechFix.Domain.Api.Controllers
     {
         [Route("v1/provider/register")]
         [HttpPost]
-        public GenericCommandResult CreateProvider([FromBody] CreateProviderCommand command, [FromServices] ProviderHandler handler)
+        [AllowAnonymous]
+        public GenericCommandResult CreateProvider([FromBody] CreateProviderCommand command, [FromServices] ProviderHandler handler, [FromServices] TokenRepository tokenRepo)
         {
             return (GenericCommandResult)handler.Handle(command);
         }

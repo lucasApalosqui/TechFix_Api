@@ -50,6 +50,7 @@ namespace TechFix.Domain.Handlers.ProviderHandlers
                 UrlImage = provider.UrlImage
             };
 
+
             return new GenericCommandResult(true, "Prestador criado com sucesso!", providerResponse);
         }
 
