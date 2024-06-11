@@ -14,6 +14,21 @@ namespace TechFix.Domain.Api.Controllers
     [ApiController]
     public class ProviderController : ControllerBase
     {
+        [Route("v1/provider/login")]
+        [HttpPost]
+        [AllowAnonymous]
+        public GenericCommandResult Loginprovider([FromBody]LoginProviderCommand command, [FromServices]ProviderHandler handler, [FromServices]TokenRepository tokenRepo)
+        {
+            var teste = (GenericCommandResult)handler.Handle(command);
+            if (teste.Success == false)
+                return teste;
+            ProviderEntity provider = (ProviderEntity)teste.Data;
+            var token = tokenRepo.Generatetoken(provider);
+            var response = new LoginProviderViewModel { Token = token };
+
+            return new GenericCommandResult(true, "Login realizado", response);
+        }
+
         [Route("v1/provider/register")]
         [HttpPost]
         [AllowAnonymous]

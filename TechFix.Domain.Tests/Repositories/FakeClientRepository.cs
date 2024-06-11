@@ -15,6 +15,11 @@ namespace TechFix.Domain.Tests.Repositories
             
         }
 
+        public ClientEntity GetByEmail(string Email)
+        {
+            return new ClientEntity("lucas", "apalosqui", "lucas@email.com", "12345678");
+        }
+
         public ClientEntity GetById(Guid id)
         {
             return new ClientEntity("lucas", "apalosqui", "lucas@email.com", "12345678");

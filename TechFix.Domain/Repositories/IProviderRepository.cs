@@ -18,5 +18,6 @@ namespace TechFix.Domain.Repositories
         IEnumerable<ProviderEntity> GetByName(string name);
         ProviderEntity GetMyProfile(Guid Id);
         ProviderEntity GetByEmail(string email);
+        ProviderEntity GetByCnpj(string cnpj);
     }
 }

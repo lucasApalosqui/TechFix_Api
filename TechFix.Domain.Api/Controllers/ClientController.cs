@@ -13,6 +13,21 @@ namespace TechFix.Domain.Api.Controllers
     [ApiController]
     public class ClientController : ControllerBase
     {
+        [Route("v1/client/login")]
+        [HttpPost]
+        public GenericCommandResult LoginClient([FromBody]LoginClientCommand command, [FromServices]ClientHandler handler, [FromServices]TokenRepository tokenRepo)
+        {
+            var teste = (GenericCommandResult)handler.Handle(command);
+            if (teste.Success == false)
+                return teste;
+
+            ClientEntity client = (ClientEntity)teste.Data;
+            var token = tokenRepo.Generatetoken(client);
+            var response = new LoginClientViewModel { Token = token};
+
+            return new GenericCommandResult(true, "Login realizado", response);
+        }
+
         [Route("v1/client/register")]
         [HttpPost]
         [AllowAnonymous]

@@ -24,6 +24,22 @@ namespace TechFix.Domain.Handlers.ProviderHandlers
             _providerRepository = providerRepositoy;
         }
 
+        public ICommandResult Handle(LoginProviderCommand command)
+        {
+            command.Validate();
+            if (command.Invalid)
+                return new GenericCommandResult(false, "Erro ao logar", command.Notifications);
+
+            var provider = _providerRepository.GetByCnpj(command.Cnpj);
+            if(provider == null)
+                return new GenericCommandResult(false, "Cnpj inválido", null);
+
+            if(!PasswordHasher.Verify(provider.PasswordHash, command.Password))
+                return new GenericCommandResult(false, "Senha inválida", null);
+
+            return new GenericCommandResult(true, "Logado com sucesso", provider);
+        }
+
         public ICommandResult Handle(CreateProviderCommand command)
         {
             command.Validate();

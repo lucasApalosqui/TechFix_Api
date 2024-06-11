@@ -15,5 +15,7 @@ namespace TechFix.Domain.Repositories
         ClientEntity GetById(Guid id);
 
         ClientEntity GetProfile(Guid Id);
+
+        ClientEntity GetByEmail(string Email);
     }
 }

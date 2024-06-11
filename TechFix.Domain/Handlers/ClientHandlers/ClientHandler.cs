@@ -24,6 +24,23 @@ namespace TechFix.Domain.Handlers.ClientHandlers
             _clientRepository = clientRepository;
         }
 
+        public ICommandResult Handle(LoginClientCommand command)
+        {
+            command.Validate();
+            if (command.Invalid)
+                return new GenericCommandResult(false, "Erro ao logar", command.Notifications);
+
+            var client = _clientRepository.GetByEmail(command.EmailAddress);
+            if(client == null)
+                return new GenericCommandResult(false, "Email inválido", null);
+
+            if(!PasswordHasher.Verify(client.PasswordHash, command.PasswordHash))
+                return new GenericCommandResult(false, "Senha inválida", null);
+
+            return new GenericCommandResult(true, "Logado com sucesso", client);
+
+        }
+
         public ICommandResult Handle(CreateClientCommand command)
         {
             command.Validate();

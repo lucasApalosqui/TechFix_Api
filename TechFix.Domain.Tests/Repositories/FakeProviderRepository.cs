@@ -20,6 +20,11 @@ namespace TechFix.Domain.Tests.Repositories
             return new List<ProviderEntity>();
         }
 
+        public ProviderEntity GetByCnpj(string cnpj)
+        {
+            return new ProviderEntity("testando", "teste@email.com", "11939512568", "12345678", "12345678912365");
+        }
+
         public ProviderEntity GetByEmail(string email)
         {
             return new ProviderEntity("testando", "teste@email.com", "11939512568", "12345678", "12345678912365");

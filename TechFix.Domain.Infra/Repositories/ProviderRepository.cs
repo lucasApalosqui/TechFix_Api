@@ -33,6 +33,14 @@ namespace TechFix.Domain.Infra.Repositories
                     .Where(ProviderQueries.GetAll());
         }
 
+        public ProviderEntity GetByCnpj(string cnpj)
+        {
+            return _context
+                    .Providers
+                    .AsNoTracking()
+                    .FirstOrDefault(x => x.Cnpj == cnpj);
+        }
+
         public ProviderEntity GetByEmail(string email)
         {
             return _context.Providers.FirstOrDefault(x => x.Email.EmailAdress == email);

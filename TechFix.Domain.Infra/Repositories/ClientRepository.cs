@@ -21,6 +21,15 @@ namespace TechFix.Domain.Infra.Repositories
             _context.SaveChanges();
         }
 
+        public ClientEntity GetByEmail(string Email)
+        {
+            return _context
+                    .Clients
+                    .AsNoTracking()
+                    .Include(x => x.Email)
+                    .FirstOrDefault(x => x.Email.EmailAdress == Email);
+        }
+
         public ClientEntity GetById(Guid id)
         {
             return _context
