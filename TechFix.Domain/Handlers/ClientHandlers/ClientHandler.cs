@@ -11,6 +11,7 @@ using TechFix.Domain.Entities;
 using TechFix.Domain.Handlers.Contracts;
 using TechFix.Domain.Repositories;
 using TechFix.Domain.ViewModels.Clients;
+using SecureIdentity.Password;
 
 namespace TechFix.Domain.Handlers.ClientHandlers
 {
@@ -29,7 +30,7 @@ namespace TechFix.Domain.Handlers.ClientHandlers
             if (command.Invalid)
                 return new GenericCommandResult(false, "O cliente está inválido", command.Notifications);
 
-            var client = new ClientEntity(command.Name, command.LastName, command.EmailAddress, command.Password);
+            var client = new ClientEntity(command.Name, command.LastName, command.EmailAddress, PasswordHasher.Hash(command.Password));
 
             _clientRepository.Create(client);
 

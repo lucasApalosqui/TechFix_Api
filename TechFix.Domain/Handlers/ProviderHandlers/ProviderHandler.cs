@@ -11,6 +11,7 @@ using TechFix.Domain.Entities;
 using TechFix.Domain.Handlers.Contracts;
 using TechFix.Domain.Repositories;
 using TechFix.Domain.ViewModels.Providers;
+using SecureIdentity.Password;
 
 namespace TechFix.Domain.Handlers.ProviderHandlers
 {
@@ -33,7 +34,7 @@ namespace TechFix.Domain.Handlers.ProviderHandlers
             if (emailVerify != null)
                 return new GenericCommandResult(false, "Email já cadastrado", command.EmailAddress);
 
-            var provider = new ProviderEntity(command.Name, command.EmailAddress, command.Phone, command.Password, command.Cnpj);
+            var provider = new ProviderEntity(command.Name, command.EmailAddress, command.Phone, PasswordHasher.Hash(command.Password), command.Cnpj);
 
             
 
