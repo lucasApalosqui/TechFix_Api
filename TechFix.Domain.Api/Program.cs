@@ -56,6 +56,7 @@ app.UseCors(x =>
     .AllowAnyMethod()
     .AllowAnyHeader()
 );
+app.UseAuthentication();
 
 app.UseAuthorization();
 

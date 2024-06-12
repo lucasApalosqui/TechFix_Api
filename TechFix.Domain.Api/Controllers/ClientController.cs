@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using TechFix.Domain.Commands;
 using TechFix.Domain.Commands.Clients;
 using TechFix.Domain.Entities;
@@ -15,6 +16,7 @@ namespace TechFix.Domain.Api.Controllers
     {
         [Route("v1/client/login")]
         [HttpPost]
+        [AllowAnonymous]
         public GenericCommandResult LoginClient([FromBody]LoginClientCommand command, [FromServices]ClientHandler handler, [FromServices]TokenRepository tokenRepo)
         {
             var teste = (GenericCommandResult)handler.Handle(command);
@@ -23,7 +25,7 @@ namespace TechFix.Domain.Api.Controllers
 
             ClientEntity client = (ClientEntity)teste.Data;
             var token = tokenRepo.Generatetoken(client);
-            var response = new LoginClientViewModel { Token = token};
+            var response = new LoginClientViewModel { Token = token };
 
             return new GenericCommandResult(true, "Login realizado", response);
         }
@@ -38,23 +40,30 @@ namespace TechFix.Domain.Api.Controllers
 
         [Route("v1/client/my-profile/update-url")]
         [HttpPut]
+        [Authorize(Roles = "cliente")]
         public GenericCommandResult UpdateUrl([FromBody]UpdateClientUrlCommand command, [FromServices]ClientHandler handler)
         {
+            var clientId = new Guid(HttpContext.User.FindFirst(ClaimTypes.Name).Value);
+            command.Id = clientId;
             return (GenericCommandResult)handler.Handle(command);
         }
 
         [Route("v1/client/my-profile/add-phone")]
         [HttpPut]
+        [Authorize(Roles = "cliente")]
         public GenericCommandResult AddPhone([FromBody]UpdateClientPhoneCommand command, [FromServices]ClientHandler handler)
         {
+            var clientId = new Guid(HttpContext.User.FindFirst(ClaimTypes.Name).Value);
+            command.Id = clientId;
             return (GenericCommandResult)handler.Handle(command);
         }
 
-        [Route("v1/client/my-profile/{id}")]
+        [Route("v1/client/my-profile")]
         [HttpGet]
-        public GenericCommandResult GetMyProfile(string id, [FromServices]IClientRepository repository)
+        [Authorize(Roles = "cliente")]
+        public GenericCommandResult GetMyProfile([FromServices]IClientRepository repository)
         {
-            var clientId = new Guid(id);
+            var clientId = new Guid(HttpContext.User.FindFirst(ClaimTypes.Name).Value);
             var client = repository.GetProfile(clientId);
 
             if (client == null)
@@ -66,9 +75,10 @@ namespace TechFix.Domain.Api.Controllers
                 FullName = $"{client.Name} {client.LastName}",
                 Email = client.Email.EmailAdress,
                 UrlImage = client.UrlImage,
-                PhoneNumber = client.Phone.MaskNumber(),
                 Hires = new List<string>()
             };
+            if(client.Phone != null)
+                response.PhoneNumber = client.Phone.MaskNumber();
 
             if(client.Hires.Count > 0)
                 foreach(var hire in client.Hires)
