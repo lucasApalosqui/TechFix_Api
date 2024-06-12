@@ -48,7 +48,10 @@ namespace TechFix.Domain.Infra.Repositories
 
         public ProviderEntity GetById(Guid id)
         {
-            return _context.Providers.FirstOrDefault(x => x.Id == id);
+            return _context
+                .Providers
+                .Include(x => x.Address)
+                .FirstOrDefault(x => x.Id == id);
         }
 
         public IEnumerable<ProviderEntity> GetByName(string name)

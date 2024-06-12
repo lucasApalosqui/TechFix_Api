@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using TechFix.Domain.Commands;
 using TechFix.Domain.Commands.Addresses;
 using TechFix.Domain.Handlers.AddressHandlers.cs;
@@ -13,23 +15,34 @@ namespace TechFix.Domain.Api.Controllers
     {
         [Route("v1/provider/my-profile/address")]
         [HttpPut]
-        public GenericCommandResult UpdateAddress([FromBody]UpdateAddressCommand command, [FromServices]AddressHandler handler)
+        [Authorize(Roles = "prestador")]
+        public GenericCommandResult UpdateAddress([FromBody]UpdateAddressCommand command, [FromServices]AddressHandler handler, [FromServices]IProviderRepository providerRepo)
         {
+            var providerId = new Guid(HttpContext.User.FindFirst(ClaimTypes.Name).Value);
+            var provider = providerRepo.GetById(providerId);
+            command.ProviderId = providerId;
+            command.AddressId = provider.Address.Id;
             return (GenericCommandResult)handler.Handle(command);
         }
 
         [Route("v1/provider/my-profile/address/add-complement")]
         [HttpPut]
-        public GenericCommandResult AddComplement([FromBody]UpdateAddressComplementCommand command, [FromServices]AddressHandler handler)
+        [Authorize(Roles = "prestador")]
+        public GenericCommandResult AddComplement([FromBody]UpdateAddressComplementCommand command, [FromServices]AddressHandler handler, [FromServices] IProviderRepository providerRepo)
         {
+            var providerId = new Guid(HttpContext.User.FindFirst(ClaimTypes.Name).Value);
+            var provider = providerRepo.GetById(providerId);
+            command.ProviderId = providerId;
+            command.AddressId = provider.Address.Id;
             return (GenericCommandResult)handler.Handle(command);
         }
 
         [Route("v1/provider/my-profile/address")]
         [HttpGet]
-        public GenericCommandResult GetAddress(string id, [FromServices]IAddressRepository repository)
+        [Authorize(Roles = "prestador")]
+        public GenericCommandResult GetAddress([FromServices]IAddressRepository repository)
         {
-            var providerId = new Guid(id);
+            var providerId = new Guid(HttpContext.User.FindFirst(ClaimTypes.Name).Value);
             var address = repository.GetAddress(providerId);
 
             if (address == null)
