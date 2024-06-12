@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Reflection.Metadata;
+using System.Security.Claims;
 using TechFix.Domain.Commands;
 using TechFix.Domain.Commands.Providers;
 using TechFix.Domain.Entities;
@@ -37,11 +38,12 @@ namespace TechFix.Domain.Api.Controllers
             return (GenericCommandResult)handler.Handle(command);
         }
 
-        [Route("v1/provider/my-profile/{id}")]
+        [Route("v1/provider/my-profile")]
         [HttpGet]
-        public GenericCommandResult GetProviderProfile(string id, [FromServices] IProviderRepository repository)
+        [Authorize(Roles = "prestador")]
+        public GenericCommandResult GetProviderProfile([FromServices] IProviderRepository repository)
         {
-            var providerId = new Guid(id);
+            var providerId = new Guid(HttpContext.User.FindFirst(ClaimTypes.Name).Value);
             var provider = repository.GetMyProfile(providerId);
 
             if (provider == null)
@@ -64,27 +66,34 @@ namespace TechFix.Domain.Api.Controllers
 
         [Route("v1/provider/my-profile/update-url")]
         [HttpPut]
+        [Authorize(Roles = "prestador")]
         public GenericCommandResult UpdateUrlImage([FromBody] UpdateUrlProviderCommand command, [FromServices] ProviderHandler handler)
         {
+            command.Id = new Guid(HttpContext.User.FindFirst(ClaimTypes.Name).Value);
             return (GenericCommandResult)handler.Handle(command);
         }
 
         [Route("v1/provider/my-profile/add-address")]
         [HttpPut]
+        [Authorize(Roles = "prestador")]
         public GenericCommandResult UpdateAddress([FromBody] AddProviderAddressCommand command, [FromServices] ProviderHandler handler)
         {
+            command.Id = new Guid(HttpContext.User.FindFirst(ClaimTypes.Name).Value);
             return (GenericCommandResult)handler.Handle(command);
         }
 
         [Route("v1/provider/my-profile/services/create-service")]
         [HttpPut]
+        [Authorize(Roles = "prestador")]
         public GenericCommandResult CreateService([FromBody] AddProviderServiceCommand command, [FromServices] ProviderHandler handler)
         {
+            command.Id = new Guid(HttpContext.User.FindFirst(ClaimTypes.Name).Value);
             return (GenericCommandResult)handler.Handle(command);
         }
 
         [Route("v1/providers/list")]
         [HttpGet]
+        [AllowAnonymous]
         public GenericCommandResult GetAll([FromServices] IProviderRepository repository)
         {
             var providers = repository.GetAll();
@@ -110,6 +119,7 @@ namespace TechFix.Domain.Api.Controllers
 
         [Route("v1/providers/list/{name}")]
         [HttpGet]
+        [AllowAnonymous]
         public GenericCommandResult GetByName(string name, [FromServices] IProviderRepository repository)
         {
             var providers = repository.GetByName(name);
