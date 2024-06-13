@@ -30,11 +30,19 @@ namespace TechFix.Domain.Api.Controllers
         [Authorize(Roles = "prestador")]
         public GenericCommandResult AddComplement([FromBody]UpdateAddressComplementCommand command, [FromServices]AddressHandler handler, [FromServices] IProviderRepository providerRepo)
         {
-            var providerId = new Guid(HttpContext.User.FindFirst(ClaimTypes.Name).Value);
-            var provider = providerRepo.GetById(providerId);
-            command.ProviderId = providerId;
-            command.AddressId = provider.Address.Id;
-            return (GenericCommandResult)handler.Handle(command);
+            try 
+            {
+                var providerId = new Guid(HttpContext.User.FindFirst(ClaimTypes.Name).Value);
+                var provider = providerRepo.GetById(providerId);
+                command.ProviderId = providerId;
+                command.AddressId = provider.Address.Id;
+                return (GenericCommandResult)handler.Handle(command);
+            }catch (Exception ex) 
+            {
+                var innerException = ex.InnerException;
+                return new GenericCommandResult(false, innerException?.Message, null);
+            }
+            
         }
 
         [Route("v1/provider/my-profile/address")]

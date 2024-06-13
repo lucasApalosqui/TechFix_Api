@@ -45,7 +45,8 @@ namespace TechFix.Domain.Infra.Mappings
 
             builder.Property(x => x.Complement)
                 .HasColumnName("Complement")
-                .HasColumnType("NVARCHAR");
+                .HasColumnType("NVARCHAR")
+                .HasMaxLength(100);
 
             builder.Property(x => x.ProviderId)
                 .HasColumnName("ProviderId")

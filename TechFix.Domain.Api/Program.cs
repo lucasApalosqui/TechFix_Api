@@ -23,7 +23,13 @@ ConfigureAuthentication(builder);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<DataContext>(opt => opt.UseInMemoryDatabase("Database"));
+//builder.Services.AddDbContext<DataContext>(opt => opt.UseInMemoryDatabase("Database"));
+builder.Services.AddDbContext<DataContext>(opt =>
+{
+    string connectionString = builder.Configuration.GetConnectionString("connectionString");
+    opt.UseSqlServer(connectionString);
+});
+
 builder.Services.AddTransient<IServiceRepository, ServiceRepository>();
 builder.Services.AddTransient<IProviderRepository, ProviderRepository>();
 builder.Services.AddTransient<IHireRepository, HireRepository>();
