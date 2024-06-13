@@ -50,6 +50,11 @@ namespace TechFix.Domain.Tests.Repositories
             return new List<ServiceEntity>();
         }
 
+        public ServiceEntity GetWithHireByProviderId(Guid providerId)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Update(ServiceEntity service)
         {
            

@@ -89,6 +89,17 @@ namespace TechFix.Domain.Infra.Repositories
                     .OrderBy(x => x.Amount);
         }
 
+        public ServiceEntity GetWithHireByProviderId(Guid providerId)
+        {
+            return _context
+                        .Services
+                        .AsNoTracking()
+                        .Include(x => x.Provider)
+                        .Include(x => x.Hires)
+                        .ThenInclude(x => x.Client)
+                        .FirstOrDefault(x => x.ProviderId == providerId);
+        }
+
         public void Update(ServiceEntity service)
         {
             _context.Entry(service).State = EntityState.Modified;
