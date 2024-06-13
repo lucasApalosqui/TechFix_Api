@@ -11,6 +11,8 @@ namespace TechFix.Domain.Entities
 {
     public class ClientEntity : Entity
     {
+        protected ClientEntity() { }
+
         public ClientEntity(string name, string lastName, string emailAddress, string password)
         {
             AddNotifications(
@@ -22,6 +24,7 @@ namespace TechFix.Domain.Entities
                     .HasMaxLen(lastName, 250, "lastName", "Sobrenome deve conter no máximo 250 caracteres")
                     .HasMinLen(password, 8, "password", "Senha deve conter pelo menos 8 caracteres")
                 );
+
             Email emailVerify = new Email(emailAddress);
             if (emailVerify.Invalid)
                 AddNotification(emailAddress, emailVerify.Notifications.ToString());
@@ -37,9 +40,10 @@ namespace TechFix.Domain.Entities
         public string Name { get; private set; }
         public string LastName { get; private set; }
         public Email Email { get; private set; }
-        public Phone Phone { get; private set; }
-        public string UrlImage { get; private set; }
+        public Phone? Phone { get; private set; }
+        public string? UrlImage { get; private set; }
         public string PasswordHash { get; private set; }
+        public IList<HireEntity>? Hires { get; private set; } = new List<HireEntity>();
 
         public void UpdatePhone(string phone)
         {
@@ -53,12 +57,12 @@ namespace TechFix.Domain.Entities
             UrlImage = urlImage;
         }
 
-        public string GenSlug(string name, string lastName)
+        private string GenSlug(string name, string lastName)
         {
-            name.ToLower();
-            lastName.ToLower();
-            name.Trim();
-            lastName.Trim();
+            name = name.ToLower();
+            lastName = lastName.ToLower();
+            name = name.Trim();
+            lastName = lastName.Trim();
             return name + "-" + lastName.Replace(" ", "-");
         }
 

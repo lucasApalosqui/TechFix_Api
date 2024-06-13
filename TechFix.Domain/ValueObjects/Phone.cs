@@ -10,6 +10,7 @@ namespace TechFix.Domain.ValueObjects
 {
     public class Phone : Notifiable
     {
+        protected Phone() { }
         public Phone(string phoneNumber)
         {
             if (phoneNumber.Length != 11)
@@ -18,17 +19,14 @@ namespace TechFix.Domain.ValueObjects
                 AddNotification(phoneNumber, "Apenas numeros são aceitos");
 
             PhoneNumber = phoneNumber;
-                
+
         }
 
         public string PhoneNumber { get; private set; }
 
         public string MaskNumber()
         {
-            string mask = "{ 0:(00)00000 - 0000}";
-            long numberln = Convert.ToInt64(PhoneNumber);
-
-            return string.Format(mask, numberln);
-    }
+            return long.Parse(PhoneNumber).ToString(@"(00) 00000-0000");
+        }
     }
 }
