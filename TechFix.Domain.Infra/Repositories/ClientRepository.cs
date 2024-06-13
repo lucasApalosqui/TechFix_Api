@@ -45,6 +45,7 @@ namespace TechFix.Domain.Infra.Repositories
                     .Clients
                     .AsNoTracking()
                     .Include(x => x.Hires)
+                    .ThenInclude(x => x.Service)
                     .Include(x => x.Phone)
                     .FirstOrDefault(ClientQueries.GetProfile(Id));
         }

@@ -50,7 +50,6 @@ namespace TechFix.Domain.Infra.Repositories
         {
             return _context
                     .Services
-                    .AsNoTracking()
                     .Include(x => x.Provider)
                     .FirstOrDefault(ServiceQueries.GetByServiceId(id));
         }
